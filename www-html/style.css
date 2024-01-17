@@ -1,0 +1,39 @@
+.bg-khu-red {
+  background-color: rgb(164, 15, 22);
+}
+
+.bg-khu-blue {
+  background-color: rgb(13, 50, 111);
+}
+
+.bg-khu-gold {
+  background-color: rgb(192, 163, 83);
+}
+
+.bg-khu-gray {
+  background-color: rgb(113, 113, 113);
+}
+
+.bg-khu-silver {
+  background-color: rgb(181, 181, 181);
+}
+
+h2 {
+  padding-top: 10pt;
+}
+
+h3 {
+  padding-top: 5pt;
+}
+
+div.wrap {
+  padding-right: 10pt;
+  padding-left: 10pt;
+}
+
+pre {
+  padding: 10pt;
+  background-color: black;
+  color: rgb(234, 234, 234);
+  font-size: 9pt;
+}

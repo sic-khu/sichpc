@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+  <head>
+    <title>HPC@SICHPC</title>
+    <meta charset="utf-8" />
+
+    <!--// Apply bootstrap style //-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sticky-footer-navbar/">
+    <link href="https://getbootstrap.com/docs/5.3/examples/sticky-footer-navbar/sticky-footer-navbar.css" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  </head>
+
+  <body>
+    <div id="JSbootstrap">
+      <!--// Javascript for the bootstraap //-->
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    </div>
+
+    <header>
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-khu-red">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#"><i class="bi bi-house-fill"></i> SICHPC</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item active">
+                <a class="nav-link" href="http://sic.khu.ac.kr" target="blank">
+                  <span class="sr-only"><i class="bi bi-building"></i></span> 융합전공 홈페이지 <sup><i class="bi bi-box-arrow-up-right"></i></sup>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link disabled" href="#">:::</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="flex-shrink-0">
+      <div class="container">
+        <div id="PAGE_HEAD">
+          <h1 class="mt-2">HPC@SIC KHU</h1>
+          <p class="lead">경희대학교 과학지능융합전공 HPC 서버</p>
+          <p class="alert alert-primary" role="alert">
+            메인 페이지 작성중입니다.
+          </p>
+          <p>
+            <ul id="toc">
+              <li>
+                <a href="#SECTION_1">1. 융합전공 HPC 서버 정보</a>
+                <ul>
+                  <li><a href="#SECTION_1_1">1.1 HPC 사용을 위한 기초 정보</a></li>
+                  <li><a href="#SECTION_1_2">1.2 계정 생성하기</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#SECTION_2">2. 사용방법</a>
+                <ul>
+                  <li><a href="#SECTION_2_1">2.1 서버 접속하기</a></li>
+                  <li><a href="#SECTION_2_2">2.2 소프트웨어 사용하기</a></li>
+                  <li><a href="#SECTION_2_3">2.3 Slurm 이용해서 자원 할당받기</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#SECTION_3">3. Slum 사용 예시</a>
+                <ul>
+                  <li><a href="#SECTION_3_1">3.1. srun </a></li>
+                  <li><a href="#SECTION_3_2">3.2. sbatch </a></li>
+                </ul>
+              </li>
+            </ul>
+          </p>
+        </div>
+        <div id="PAGE_BODY">
+          <div class="wrap mb-4">
+            <h2 id="SECTION_1">1. 융합전공 HPC 서버 정보</h2>
+            <div class="wrap">
+              <h3 id="SECTION_1_1">1.1 HPC 사용을 위한 기초 정보</h3>
+              <p>
+                본 HPC 서버는 과학지능정보 융합전공 학생들과 관련 학과 교수, 연구원등이 융합전공 과목 강의 중 실습과 관련 연구에 사용하실 수 있습니다.<br/>
+                계산 자원에 접근하려면 서버에 계정을 생성해야 하고, 이후 ssh를 이용해 서버에 접속해 사용하실 수 있습니다.
+              </p>
+              <p>
+                ssh로 접속한 리눅스 환경(UI)에서는 프로그램 코드 작성이나 짧은 테스트 작업을 수행하고,
+                GPU자원 사용을 포함해 계산량이 많은 작업은 slurm을 이용해 계산 노드 자원을 할당받아 처리합니다.
+                계산 노드로의 ssh접속은 slurm 작업을 제출해 자원을 할당 받은 다음에만 할 수 있습니다.
+              </p>
+              <h3 id="SECTION_1_2">1.2 계정 생성하기</h3>
+              <div class="row wrap">
+                <div class="col">
+                  <div class="card">
+                    <div class="card-header" style="font-weight:bold"><i class="bi bi-person-vcard"></i> 실습용 계정 (수강생)</div>
+                    <div class="card-body">
+                      <p class="card-text">
+                        융합전공 과목 수강생은 실습을 위해 계정을 생성할 수 있습니다. <br/>
+                        <code>&lt;USER_ID&gt;</code>는 학번을 기준으로(ex: <b>s</b>2023123456) 일괄 생성합니다.<br/>
+                        수업 진행 학기만 사용하고, 계정과 홈디렉토리는 삭제됩니다.<br/>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="card">
+                    <div class="card-header" style="font-weight:bold"><i class="bi bi-person-vcard"></i> 연구용 계정 (연구원 등)</div>
+                    <div class="card-body">
+                      <p class="card-text">
+                        교수, 조교 등은 연구용 계정을 신청해 받을 수 있습니다.<br/>
+                        관리자에게 별도로 <code>&lt;USER_ID&gt;</code> 계정을 생성하도록 요청할 수 있습니다.<br/>
+                        장기 미사용자의 경우 계정과 홈디렉토리가 삭제될 수 있습니다.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="wrap">
+            <h2 id="SECTION_2">2. 사용방법</h2>
+            <div class="wrap">
+              <h3 id="SECTION_2_1">2.1. 서버 접속하기</h3>
+              <pre>
+[LOCAL_ID@localhost ~]$ ssh sichpc.khu.ac.kr -p 222 -l <span class="text-info">&lt;USER_ID&gt;</span>
+[USER_ID@sichpc ~]$</pre>
+            </div>
+            <div class="wrap">
+              <h3 id="SECTION_2_2">2.2 소프트웨어 사용하기</h3>
+              <div class="wrap">
+                <h4 id="SECTION_2_2_1">2.2.1 anaconda/python</h4>
+                <p>
+                  기본적으로 시스템에 설치된 python도 있지만, 최신 패키지를 사용하기 위해 anaconda를 사용합니다.
+                  <pre>
+[USER_ID@sichpc ~]$ conda activate
+(base) [USER_ID@sichpc ~]$</pre>
+
+                    현재 사용할 수 있는 conda환경은 아래 명령어로 확인할 수 있습니다.
+                    <pre>
+[USER_ID@sichpc ~]$ conda info --envs
+# conda environments:
+#
+                         /home/convergence2023/jhgoh/myenv
+base                     /opt/sw/anaconda3
+torch201_cu118           /opt/sw/anaconda3/envs/torch201_cu118</pre>
+                </p>
+              </div>
+              <div class="wrap">
+                <h4 id="SECTION_2_2_2">2.2.2 matlab</h4>
+		<p>
+		  R2023b 버전을 사용중이며, 아래와 같은 명령어로 MATLAB 터미널을 열 수 있습니다.
+		  <pre>
+[USER_ID@sichpc ~] matlab</pre>
+
+		  터미널이 아닌, script 실행을 위해서는 다음과 같은 방법으로 실행 가능합니다.
+		  <pre>
+[USER_IDX@sichpc ~] matlab -nodisplay -r "{script_name} ; exit"</pre>
+		  여기서 {script_name}은 확장자를 제외한 파일명입니다. 예를들어, script의 이름이 "HelloWorld.m" 이라면, HelloWorld가 {script_name}이 됩니다. -r 옵션은 스크립트를 실행하기 위해 필요한 옵션이며, -nodisplay 옵션은 MATLAB 터미널이 아닌 command line 상에서의 표준입출력을 할수 있게 해줍니다. 마지막으로 script를 실행하면 exit를 통해 matlab 프로세스를 종료시킵니다.
+
+		  
+		</p>
+		
+              </div>
+              <div class="wrap">
+                <h4 id="SECTION_2_2_3">2.2.3 anaconda/rstudio</h4>
+                In progress...
+              </div>
+              <div class="wrap">
+                <h4 id="SECTION_2_2_4">2.2.4 docker/singularity/apptainer</h4>
+                <p>
+                  docker를 이용하면 다른 배포판의 linux환경을 구성해 각종 프로그램을 사용할 수 있습니다. 
+                  singularity를 이용하면 별도의 권한 설정 없이 유저가  docker image를 활용할 수 있습니다.
+                  <pre>
+[USER_ID@sichpc ~]$ singularity run docker://YOUR_DOCKER_IMAGE</pre>
+                </p>
+              </div>
+            </div>
+            <div class="wrap">
+              <h3 id="SECTION_2_3">2.3. Slurm 이용해서 자원 할당받기</h3>
+              <p>
+                간단한 작업은 ssh접속 직후 화면에서 할 수 있지만, 계산량이 많은 작업을 위해서는 slurm을 이용해
+                계산 노드 자원을 할당받아 작업을 제출해 사용해야 합니다. <br/>
+                특히 <span style="font-weight:bold">GPU는 계산 노드에만 설치</span>되어 있기 때문에 slurm사용이 필수적입니다.
+              </p>
+              <p>
+                <ul>
+                  <li>빠른 사용을 위해 <a href="https://slurm.schedmd.com/quickstart.html">[Slurm Quick Start]</a> 문서를 참고하세요.</li>
+                  <li>slurm과 관련한 자세한 사항은 <a href="https://slurm.schedmd.com/documentation.html">[공식 메뉴얼]</a>을 참조 바랍니다.</li>
+                </ul>
+              </p>
+              <p>
+                작업 제출과 확인, 제어를 위한 주요 명령어는 아래와 같습니다.
+                <div class="container table-responsive-sm">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">명령어</th>
+                        <th scope="col">설명</th>
+                        <th scope="col">사용예시</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td scope="row"><code>srun</code></td>
+                        <td scope="row">
+                          명령어를 계산노드에서 실행하면서 표준출력으로 바로 결과를 표시함.</br>
+                          계산노드들에 다른 대기작업이 가득 차 있으면 실행 가능할때까지 기다림.
+                        </td>
+                        <td scope="row">
+                          <code>srun -p 2023Fall hostname</code><br/>
+                          <code>srun -p 2023Fall -G1 nvidia-smi</code><br/>
+                          <code>srun -p 2023Fall ./batch.sh ARG1 ARG2</code>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td scope="row"><code>sbatch</code></td>
+                        <td scope="row">
+                          계산노드에서 실행하기 위해 별도로 작성한 셸스크립트를 매개변수로 받아 제출.<br/>
+                          출력 결과는 별도의 로그 파일로 저장함.
+                        </td>
+                        <td scope="row">
+                          <code>sbatch -J JOBNAME -p 2023Fall ./script.sh ARG1 ARG2</code>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td scope="row"><code>squeue</code></td>
+                        <td scope="row">
+                          제출되어 있는 job들의 내역과 상태를 표시함.<br/>
+                          현재 실행중이거나 대기중인 작업들을 확인할 수 있음.
+                        </td>
+                        <td scope="row">
+                          <code>squeue</code><br/>
+                          <code>squeue -l</code>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td scope="row"><code>sinfo</code></td>
+                        <td scope="row">
+                          사용 가능한 partition의 목록을 표시함.<br/>
+                        </td>
+                        <td scope="row">
+                          <code>sinfo</code><br/>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td scope="row"><code>scancel</code></td>
+                        <td scope="row">제출 된 작업 중 작업을 종료하거나 대기중인 작업을 취소함.</td>
+                        <td scope="row">
+                          <code>scancel 12345</code>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td scope="row"><code>salloc</code></td>
+                        <td scope="row">
+                          계산노드에 자원할당만 받음.<br/>
+                          자원 할당 받은 후 ssh로 해당 노드에 접속해 interactive작업 수행할 수 있음.<br/>
+                          작업 후 UI머신에서 <code>exit</code> 명령어로 빠져나오면 자동으로 해당 자원을 해제함.
+                        </td>
+                        <td scope="row">
+                          <code>salloc -p 2023Fall; ssh $SLURM_JOB_NODELIST</code><br/>
+                          <code>salloc -p 2023Fall; srun ./batch.sh
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </p>
+              <p>
+                Slurm에 Job을 제출할때 유용한 옵션들입니다.
+                <div class="container table-responsive-sm">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Option</th>
+                        <th scope="col">Input</th>
+                        <th scope="col">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td scope="row">-J, --job-name</td>
+                        <td scope="row"><code>&lt;job_name&gt;</code></td>
+                        <td scope="row">job의 이름</td>
+                      </tr>
+                      <tr>
+                        <td scope="row">-p, --partition</td>
+                        <td scope="row"><code>&lt;partition_name&gt;</code></td>
+                        <td scope="row">partition(작업공간)의 이름</td>
+                      </tr>
+                      <tr>
+                        <td scope="row">-o, --output</td>
+                        <td scope="row"><code>&lt;filename_pattern&gt;</code></td>
+                        <td scope="row">stdout을 저장할 파일 이름</td>
+                      </tr>
+                      <tr>
+                        <td scope="row">-e, --error</td>
+                        <td scope="row"><code>&lt;filname_pattern&gt;</code></td>
+                        <td scope="row">stderr를 저장할 파일 이름</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </p>
+            </div>
+            <div class="wrap">
+              <h2 id="SECTION_3">3. Slurm 사용 예시</h2>
+              <div class="wrap">
+                <h3 id="SECTION_3_1">3.1. srun </h3>
+                <p>
+                  명령어를 커맨드 라인으로 입력하여 제출하는 방식입니다.<br>
+                  stdout 및 stderr가 화면에 나타나는 특징이 있습니다.<br>
+                  대기중인 job이 존재할 때 제출하면, job이 시작되기 전까지 다른 작업을 진행할 수 없습니다.
+                </p>
+                <pre>
+[USER_ID@sichpc ~]$ srun -J <span class="text-info">&lt;jobname&gt;</span> -p <span class="text-info">&lt;partition_names&gt;</span> <span class="text-info">&lt;executable&gt;</span> <span class="text-info">[args ...]</span>
+<span class="text-secondary">something may be printed out</span>
+[USER_ID@sichpc ~]$</pre>
+              </div>
+              <div class="wrap">
+                <h3 id="SECTION_3_2">3.2. sbatch </h3>
+                <p>
+                  명령어를 셸스크립트로 작성하여 제출하는 방식입니다.
+                  <ul>
+                    <li>stdout 및 stderr가 화면에 나타나지 않습니다.</li>
+                    <li>대기중인 job이 존재할 때 제출하면, job을 대기시켜놓고 다른 작업을 진행할 수 있습니다.</li>
+                    <li>#SBATCH 로 sbatch 명령어에 넘겨줄 기본값들을 지정할 수 있습니다.</li>
+                  </ul>
+                  아래 예시를 이용하면 원주율을 계산하는 python 스크립트를 계산노드에서 10개 실행해
+                  출력 결과를 <code>OUTPUT_1_1.log</code>, <code>OUTPUT_1_2.log</code>, ... <code>OUTPUT_1_9.log</code>로 저장할 수 있습니다.
+                </p>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-sm">
+                      A. python script 예시: (<span class="text-info"><a href="./files/compute_pi.py" download="">compute_pi.py</a></span>)
+                      <pre>
+#!/usr/bin/env python
+import numpy as np
+import pandas as pd
+import sys, os
+
+def getenv(var, default=''):
+    if var not in os.environ: return str(default)
+    return os.environ[var]
+
+jobId = int(getenv('SLURM_JOB_ID', 0))
+jobSection = int(getenv('SLURM_ARRAY_TASK_ID', 0))
+np.random.seed(jobId*1000+jobSection)
+
+n = 100000
+rx = np.random.uniform(-1, 1, n)
+ry = np.random.uniform(-1, 1, n)
+r2 = rx*rx + ry*ry
+nIn = (r2&lt;1).sum()
+
+print(nIn, n, nIn/n*4)</pre>
+                    </div>
+                    <div class="col-sm">
+                      B. 실행용 bash script 예시: (<span class="text-info"><a href="./files/script.sh" download"">script.sh</a></span>)
+                      <pre>
+#!/bin/bash
+
+#SBATCH -J <span class="text-info">MYTESTJOB</span>
+#SBATCH -p <span class="text-info">2023Fall</span>
+#SBATCH -o <span class="text-info">OUTPUT_%A_%a.log</span>
+#SBATCH -e <span class="text-info">OUTPUT_%A_%a.err</span>
+
+hostname
+
+source /opt/sw/anaconda3/etc/profile.d/conda.sh
+conda activate
+
+python <span class="text-info">compute_pi.py</span></pre>
+                    </div>
+                    <div class="col-sm">
+                      C. UI머신에서 job submit하기
+                      <pre>
+[USER_ID@sichpc ~]$ sbatch -a [0-9] <span class="text-info">script.sh</span>
+[USER_ID@sichpc ~]$ squeue</pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    
+    <footer class="footer mt-auto py-3 bg-khu-red">
+      <div class="container">
+      </div>
+    </footer>
+
+  </body>
+
+</html>
+
