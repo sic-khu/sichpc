@@ -1,23 +1,17 @@
 #!/usr/bin/env python
-
-#This code was uploaded 8.Nov.23
-
+import os
 import numpy as np
-import pandas as pd
-import sys, os
 
-def getenv(var, default=''):
-    if var not in os.environ: return str(default)
-    return os.environ[var]
+def getenv(var, default=""):
+    return os.environ.get(var, str(default))
 
-jobId = int(getenv('SLURM_JOB_ID', 0))
-jobSection = int(getenv('SLURM_ARRAY_TASK_ID', 0))
-np.random.seed(jobId*1000+jobSection)
+job_id = int(getenv("SLURM_JOB_ID", 0))
+task_id = int(getenv("SLURM_ARRAY_TASK_ID", 0))
+np.random.seed(job_id * 1000 + task_id)
 
 n = 100000
 rx = np.random.uniform(-1, 1, n)
 ry = np.random.uniform(-1, 1, n)
-r2 = rx*rx + ry*ry
-nIn = (r2<1).sum()
+n_in = np.sum(rx * rx + ry * ry < 1)
 
-print(nIn, n, nIn/n*4)
+print(n_in, n, n_in / n * 4)
