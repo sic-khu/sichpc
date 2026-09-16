@@ -582,17 +582,6 @@ a:hover {
   color: var(--khu-gold);
 }
 
-.account-apply-box {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px dashed var(--border-color);
-}
-
-.account-apply-box p {
-  margin-bottom: 0.75rem;
-  font-size: 0.875rem;
-}
-
 .account-card {
   border: 1px solid var(--border-color);
   border-radius: var(--radius);
@@ -624,6 +613,15 @@ a:hover {
 
 [data-theme="dark"] .account-card.research .account-card-header {
   color: var(--khu-gold);
+}
+
+.account-card.individual .account-card-header {
+  background: rgba(164, 15, 22, 0.08);
+  color: var(--khu-red);
+}
+
+[data-theme="dark"] .account-card.individual .account-card-header {
+  background: rgba(164, 15, 22, 0.18);
 }
 
 .account-card-body {
