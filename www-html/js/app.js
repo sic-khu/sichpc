@@ -162,6 +162,160 @@
     });
   }
 
+  /* ── Notice board ── */
+  const NOTICE_DIR = 'notices/';
+  const NOTICES_PER_PAGE = 5;
+  const NEW_BADGE_DAYS = 7;
+
+  function el(tag, className, text) {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text !== undefined) node.textContent = text;
+    return node;
+  }
+
+  function isRecent(dateStr) {
+    const date = new Date(dateStr);
+    if (Number.isNaN(date.getTime())) return false;
+    return (Date.now() - date.getTime()) / 86400000 <= NEW_BADGE_DAYS;
+  }
+
+  function parseNotice(file, text) {
+    const meta = {};
+    let body = text;
+    const fm = text.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
+    if (fm) {
+      fm[1].split(/\r?\n/).forEach((line) => {
+        const m = line.match(/^(\w+)\s*:\s*(.*)$/);
+        if (m) meta[m[1]] = m[2].trim().replace(/^["']|["']$/g, '');
+      });
+      body = text.slice(fm[0].length);
+    }
+    return {
+      id: file.replace(/\.md$/, ''),
+      title: meta.title || file,
+      date: meta.date || '',
+      pinned: meta.pinned === 'true',
+      body,
+    };
+  }
+
+  function renderMarkdown(container, markdown) {
+    if (!window.marked || !window.DOMPurify) {
+      container.textContent = markdown;
+      container.style.whiteSpace = 'pre-line';
+      return;
+    }
+    container.innerHTML = DOMPurify.sanitize(marked.parse(markdown, { breaks: true }));
+    container.querySelectorAll('a[href^="http"]').forEach((a) => {
+      a.target = '_blank';
+      a.rel = 'noopener';
+    });
+  }
+
+  function renderNoticeItem(notice) {
+    const item = el('li', 'notice-item' + (notice.pinned ? ' pinned' : ''));
+    item.id = `notice-${notice.id}`;
+
+    const row = el('button', 'notice-row');
+    row.type = 'button';
+    row.setAttribute('aria-expanded', 'false');
+
+    const title = el('span', 'notice-col-title');
+    if (notice.pinned) {
+      const pin = el('i', 'bi bi-pin-angle-fill notice-pin');
+      pin.setAttribute('aria-label', '고정 공지');
+      title.appendChild(pin);
+    }
+    title.appendChild(el('span', 'notice-title-text', notice.title));
+    if (isRecent(notice.date)) title.appendChild(el('span', 'notice-new', 'NEW'));
+
+    const date = el('span', 'notice-col-date', notice.date);
+
+    row.append(title, date);
+
+    const body = el('div', 'notice-body');
+    body.hidden = true;
+    const content = el('div', 'notice-content');
+    renderMarkdown(content, notice.body);
+    body.appendChild(content);
+
+    row.addEventListener('click', () => {
+      const open = row.getAttribute('aria-expanded') === 'true';
+      row.setAttribute('aria-expanded', String(!open));
+      body.hidden = open;
+      item.classList.toggle('open', !open);
+    });
+
+    item.append(row, body);
+    return item;
+  }
+
+  function renderNoticePage(notices, page) {
+    const list = document.getElementById('noticeList');
+    const pager = document.getElementById('noticePagination');
+    const totalPages = Math.max(1, Math.ceil(notices.length / NOTICES_PER_PAGE));
+    const start = (page - 1) * NOTICES_PER_PAGE;
+
+    list.replaceChildren();
+    if (notices.length === 0) {
+      list.appendChild(el('li', 'notice-empty', '등록된 공지사항이 없습니다.'));
+    } else {
+      notices.slice(start, start + NOTICES_PER_PAGE)
+        .forEach((n) => list.appendChild(renderNoticeItem(n)));
+    }
+
+    pager.replaceChildren();
+    if (totalPages <= 1) return;
+    for (let p = 1; p <= totalPages; p++) {
+      const btn = el('button', 'notice-page' + (p === page ? ' active' : ''), String(p));
+      btn.type = 'button';
+      if (p === page) btn.setAttribute('aria-current', 'page');
+      btn.addEventListener('click', () => renderNoticePage(notices, p));
+      pager.appendChild(btn);
+    }
+  }
+
+  async function initNotices() {
+    const list = document.getElementById('noticeList');
+    if (!list) return;
+
+    try {
+      const res = await fetch(NOTICE_DIR + 'index.json', { cache: 'no-cache' });
+      if (!res.ok) throw new Error(res.statusText);
+      const files = await res.json();
+
+      const loaded = await Promise.all(files.map(async (file) => {
+        try {
+          const r = await fetch(NOTICE_DIR + encodeURIComponent(file), { cache: 'no-cache' });
+          return r.ok ? parseNotice(file, await r.text()) : null;
+        } catch {
+          return null;
+        }
+      }));
+
+      const notices = loaded.filter(Boolean).sort((a, b) => {
+        if (b.pinned !== a.pinned) return b.pinned ? 1 : -1;
+        return b.date.localeCompare(a.date) || b.id.localeCompare(a.id);
+      });
+      renderNoticePage(notices, 1);
+
+      const target = location.hash.match(/^#notice-(.+)$/);
+      if (target) {
+        const id = decodeURIComponent(target[1]);
+        const idx = notices.findIndex((n) => n.id === id);
+        if (idx >= 0) {
+          renderNoticePage(notices, Math.floor(idx / NOTICES_PER_PAGE) + 1);
+          const item = document.getElementById(`notice-${id}`);
+          item?.querySelector('.notice-row')?.click();
+          item?.scrollIntoView({ block: 'center' });
+        }
+      }
+    } catch {
+      list.replaceChildren(el('li', 'notice-empty', '공지사항을 불러오지 못했습니다.'));
+    }
+  }
+
   /* ── Back to top ── */
   function initBackToTop() {
     const btn = document.getElementById('btnBackTop');
@@ -185,5 +339,6 @@
     initScrollSpy();
     initMobileToc();
     initBackToTop();
+    initNotices();
   });
 })();

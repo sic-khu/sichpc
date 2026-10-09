@@ -22,6 +22,9 @@
         <i class="bi bi-cpu-fill"></i> SICHPC
       </a>
       <div class="nav-actions">
+        <a class="nav-link-ext" href="#NOTICE">
+          <i class="bi bi-megaphone-fill"></i> 공지사항
+        </a>
         <a class="nav-link-ext d-none d-sm-inline-flex" href="http://sic.khu.ac.kr" target="_blank" rel="noopener">
           융합전공 홈페이지 <i class="bi bi-box-arrow-up-right"></i>
         </a>
@@ -65,6 +68,9 @@
         <nav>
           <ul class="toc-list">
             <li>
+              <a href="#NOTICE">공지사항</a>
+            </li>
+            <li>
               <a href="#SECTION_1">1. HPC 서버 정보</a>
               <ul>
                 <li><a href="#SECTION_1_1">1.1 기초 정보</a></li>
@@ -98,6 +104,23 @@
 
     <!-- Main Content -->
     <main class="content" id="main-content">
+
+      <!-- Notice board -->
+      <section id="NOTICE">
+        <div class="section-card">
+          <h2><i class="bi bi-megaphone-fill"></i> 공지사항</h2>
+          <div class="notice-board" id="noticeBoard" aria-live="polite">
+            <div class="notice-header" aria-hidden="true">
+              <span class="notice-col-title">제목</span>
+              <span class="notice-col-date">작성일</span>
+            </div>
+            <ul class="notice-list" id="noticeList">
+              <li class="notice-empty">공지사항을 불러오는 중입니다…</li>
+            </ul>
+            <nav class="notice-pagination" id="noticePagination" aria-label="공지사항 페이지"></nav>
+          </div>
+        </div>
+      </section>
 
       <!-- Section 1 -->
       <section id="SECTION_1">
@@ -237,7 +260,7 @@
               </div>
               <button class="btn-copy" type="button"><i class="bi bi-clipboard"></i> <span>복사</span></button>
             </div>
-            <pre><span class="hl-prompt">[LOCAL_ID@localhost ~]$</span> ssh <span class="hl-info">&lt;USER_ID&gt;</span>@sichpc.khu.ac.kr
+            <pre><span class="hl-prompt">[LOCAL_ID@localhost ~]$</span> ssh -p 23432 <span class="hl-info">&lt;USER_ID&gt;</span>@sichpc.khu.ac.kr 
 <span class="hl-prompt">[USER_ID@sichpc ~]$</span></pre>
           </div>
 
@@ -714,7 +737,7 @@ Submitted batch job 12345
 명령은 복사해 실행할 수 있게 짧게 줘. 로그인 노드에서 GPU·긴 계산을 시키지 마라.
 
 ## 클러스터
-- 로그인 노드: sichpc.khu.ac.kr (GPU 없음). SSH: ssh &lt;USER_ID&gt;@sichpc.khu.ac.kr
+- 로그인 노드: sichpc.khu.ac.kr (GPU 없음). SSH: ssh -p 23432 &lt;USER_ID&gt;@sichpc.khu.ac.kr
 - 계산 노드 4대(node01–04)를 여러 사람이 나눠 쓴다. 노드당 GPU 2장(RTX 3090, VRAM 24GB).
 - GPU·긴 계산은 반드시 Slurm. 계산 노드 SSH는 할당 후에만 (ssh $SLURM_JOB_NODELIST).
 - 매뉴얼: https://sichpc.khu.ac.kr/  문의: siconv@khu.ac.kr
@@ -794,6 +817,8 @@ python my_script.py
     <i class="bi bi-arrow-up"></i>
   </button>
 
+  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

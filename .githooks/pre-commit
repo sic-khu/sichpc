@@ -1,0 +1,24 @@
+#!/bin/sh
+# www-html/notices/*.md 목록으로 www-html/notices/index.json을 갱신한다.
+# 이름이 _로 시작하는 파일은 목록에서 제외한다.
+set -e
+
+ROOT=$(git rev-parse --show-toplevel)
+DIR="$ROOT/www-html/notices"
+OUT="$DIR/index.json"
+
+{
+  printf '[\n'
+  first=1
+  for f in "$DIR"/*.md; do
+    [ -e "$f" ] || continue
+    name=$(basename "$f")
+    case "$name" in _*) continue ;; esac
+    [ "$first" -eq 1 ] || printf ',\n'
+    printf '  "%s"' "$name"
+    first=0
+  done
+  printf '\n]\n'
+} > "$OUT"
+
+git add "$OUT"
